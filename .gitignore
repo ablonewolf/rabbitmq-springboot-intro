@@ -1,0 +1,42 @@
+# Ignore target directories
+**/target/
+**/node_modules/
+
+# Maven wrapper
+!**/.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Gradle
+**/.gradlew
+**/.gradle/
+**/build
+
+### IntelliJ IDEA ###
+**/.idea/
+**.iml
+
+### Eclipse ###
+**/.apt_generated
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings
+**/.springBeans
+**/.sts4-cache
+
+### NetBeans ###
+**/nbproject/private/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
+**/build/
+!**/src/main/**/build/
+
+### VS Code ###
+**/.vscode/
+
+### Mac OS ###
+.DS_Store
+/.idea/inspectionProfiles/Project_Default.xml
