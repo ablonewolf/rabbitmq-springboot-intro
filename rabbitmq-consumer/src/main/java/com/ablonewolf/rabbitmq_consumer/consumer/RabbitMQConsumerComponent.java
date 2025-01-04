@@ -3,14 +3,14 @@ package com.ablonewolf.rabbitmq_consumer.consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
-@Service
-public class RabbitMQConsumerService {
+@Component
+public class RabbitMQConsumerComponent {
 
-    private static final Logger log = LoggerFactory.getLogger(RabbitMQConsumerService.class);
+    private static final Logger log = LoggerFactory.getLogger(RabbitMQConsumerComponent.class);
 
     @RabbitListener(queues = "helloQueue")
     public void listen(String message) {

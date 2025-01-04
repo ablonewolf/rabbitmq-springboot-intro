@@ -1,6 +1,6 @@
 package com.ablonewolf.rabbitmq_producer;
 
-import com.ablonewolf.rabbitmq_producer.producer.RabbitMQProducerService;
+import com.ablonewolf.rabbitmq_producer.producer.RabbitMQProducerComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,11 +14,11 @@ import java.util.concurrent.ThreadLocalRandom;
 @RequiredArgsConstructor
 public class RabbitmqProducerApplication implements CommandLineRunner {
 
-    private final RabbitMQProducerService rabbitMQProducerService;
+    private final RabbitMQProducerComponent rabbitMQProducerComponent;
 
     @Override
     public void run(String... args) {
-        rabbitMQProducerService.sendMessage("Thread Name: " + ThreadLocalRandom.current().nextInt());
+        rabbitMQProducerComponent.sendMessage("Thread Name: " + ThreadLocalRandom.current().nextInt());
     }
 
     public static void main(String[] args) {
