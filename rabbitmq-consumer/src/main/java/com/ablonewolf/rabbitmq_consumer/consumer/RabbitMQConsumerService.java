@@ -1,4 +1,4 @@
-package com.ablonewolf.rabbitmq_consumer.service;
+package com.ablonewolf.rabbitmq_consumer.consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
