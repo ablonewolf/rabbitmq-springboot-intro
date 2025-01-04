@@ -1,6 +1,6 @@
 package com.ablonewolf.rabbitmq_producer;
 
-import com.ablonewolf.rabbitmq_producer.service.RabbitMQProducerService;
+import com.ablonewolf.rabbitmq_producer.producer.RabbitMQProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

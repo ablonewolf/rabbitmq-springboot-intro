@@ -1,4 +1,4 @@
-package com.ablonewolf.rabbitmq_producer.service;
+package com.ablonewolf.rabbitmq_producer.producer;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
