@@ -46,6 +46,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.18.2'
 
+    // https://mvnrepository.com/artifact/com.github.javafaker/javafaker
+    implementation('com.github.javafaker:javafaker:1.0.2')
+            { exclude group: 'org.yaml', module: 'snakeyaml' }
 
 
 }
