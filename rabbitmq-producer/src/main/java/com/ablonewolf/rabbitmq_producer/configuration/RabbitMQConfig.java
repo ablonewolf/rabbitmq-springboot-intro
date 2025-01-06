@@ -1,5 +1,9 @@
 package com.ablonewolf.rabbitmq_producer.configuration;
 
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -26,6 +30,10 @@ public class RabbitMQConfig {
     @Value("${spring.rabbitmq.password}")
     private String password;
 
+    public static final String HR_EXCHANGE = "hr.exchange";
+    public static final String ACCOUNTING_QUEUE = "accounting.queue";
+    public static final String MARKETING_QUEUE = "marketing.queue";
+
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
@@ -48,5 +56,29 @@ public class RabbitMQConfig {
         return new Jackson2JsonMessageConverter();
     }
 
+    @Bean
+    public Queue accountingQueue() {
+        return new Queue(ACCOUNTING_QUEUE, true);
+    }
+
+    @Bean
+    public Queue marketingQueue() {
+        return new Queue(MARKETING_QUEUE, true);
+    }
+
+    @Bean
+    public FanoutExchange getHRExchange() {
+        return new FanoutExchange(HR_EXCHANGE);
+    }
+
+    @Bean
+    public Binding accountingBinding() {
+        return BindingBuilder.bind(accountingQueue()).to(getHRExchange());
+    }
+
+    @Bean
+    public Binding marketingBinding() {
+        return BindingBuilder.bind(marketingQueue()).to(getHRExchange());
+    }
 
 }
