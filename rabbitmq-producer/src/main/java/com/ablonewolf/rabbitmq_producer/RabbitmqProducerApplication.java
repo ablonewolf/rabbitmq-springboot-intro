@@ -1,7 +1,7 @@
 package com.ablonewolf.rabbitmq_producer;
 
 import com.ablonewolf.rabbitmq_producer.model.Employee;
-import com.ablonewolf.rabbitmq_producer.producer.RabbitMQProducerComponent;
+import com.ablonewolf.rabbitmq_producer.producer.EmployeePublisherComponent;
 import com.ablonewolf.rabbitmq_producer.util.RandomNameGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class RabbitmqProducerApplication implements CommandLineRunner {
 
-    private final RabbitMQProducerComponent rabbitMQProducerComponent;
+    private final EmployeePublisherComponent employeePublisherComponent;
 
     @Override
     public void run(String... args) {
@@ -24,7 +24,7 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
             var employee = new Employee(RandomNameGenerator.generateRandomId(),
                 RandomNameGenerator.generateRandomName(),
                 LocalDate.now());
-            rabbitMQProducerComponent.publishEmployeeToQueue(employee);
+            employeePublisherComponent.publishEmployeeFromHRExchange(employee);
         }
     }
 

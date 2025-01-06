@@ -1,5 +1,6 @@
 package com.ablonewolf.rabbitmq_producer.producer;
 
+import com.ablonewolf.rabbitmq_producer.configuration.RabbitMQConfig;
 import com.ablonewolf.rabbitmq_producer.model.Employee;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,15 +12,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RabbitMQProducerComponent {
+public class EmployeePublisherComponent {
     private final RabbitTemplate rabbitTemplate;
     private final ObjectMapper objectMapper;
-    private static final Logger log = LoggerFactory.getLogger(RabbitMQProducerComponent.class);
+    private static final Logger log = LoggerFactory.getLogger(EmployeePublisherComponent.class);
 
-    public void publishEmployeeToQueue(Employee employee) {
+    public void publishEmployeeFromHRExchange(Employee employee) {
         try {
             var jsonObject = objectMapper.writeValueAsString(employee);
-            rabbitTemplate.convertAndSend("employeeQueue", jsonObject);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.HR_EXCHANGE, "", jsonObject);
         } catch (JsonProcessingException e) {
             log.error("An error occurred while serializing employee to json, details: {}", e.getMessage());
         }
