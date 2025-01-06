@@ -11,7 +11,7 @@ public class RandomNameGenerator {
     }
 
     public static String generateRandomId() {
-        return faker.idNumber().toString();
+        return String.valueOf(faker.random().nextInt(100));
     }
 }
 
