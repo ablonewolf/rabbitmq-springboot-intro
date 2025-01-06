@@ -16,10 +16,6 @@ public class RabbitMQProducerComponent {
     private final ObjectMapper objectMapper;
     private static final Logger log = LoggerFactory.getLogger(RabbitMQProducerComponent.class);
 
-    public void sendMessage(String message) {
-        rabbitTemplate.convertAndSend("helloQueue", message);
-    }
-
     public void publishEmployeeToQueue(Employee employee) {
         try {
             var jsonObject = objectMapper.writeValueAsString(employee);
@@ -28,8 +24,6 @@ public class RabbitMQProducerComponent {
             log.error("An error occurred while serializing employee to json, details: {}", e.getMessage());
         }
     }
-
-
 
 /*
     @Scheduled(fixedRate = 500)
