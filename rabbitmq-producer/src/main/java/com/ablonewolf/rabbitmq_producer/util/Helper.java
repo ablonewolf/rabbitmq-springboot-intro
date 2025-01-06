@@ -13,6 +13,14 @@ public class Helper {
     public static String generateRandomId() {
         return String.valueOf(faker.random().nextInt(100));
     }
+
+    public static String generatePictureName() {
+        return faker.pokemon().name();
+    }
+
+    public static Long generateRandomSize() {
+        return faker.random().nextLong();
+    }
 }
 
 
