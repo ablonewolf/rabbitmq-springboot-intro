@@ -29,6 +29,9 @@ public class RabbitMQConfig {
     public static final String ACCOUNTING_QUEUE = "accounting.queue";
     public static final String MARKETING_QUEUE = "marketing.queue";
 
+    public static final String PICTURE_IMAGES_QUEUE = "queue.picture.image";
+    public static final String PICTURE_VECTOR_QUEUE = "queue.picture.vector";
+
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
