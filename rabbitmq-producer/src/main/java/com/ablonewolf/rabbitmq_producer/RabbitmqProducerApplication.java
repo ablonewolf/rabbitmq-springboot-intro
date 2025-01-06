@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.LocalDate;
-import java.util.concurrent.ThreadLocalRandom;
 
 @EnableScheduling
 @SpringBootApplication
@@ -21,8 +20,6 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        rabbitMQProducerComponent.sendMessage("Thread Name: " + ThreadLocalRandom.current().nextInt());
-
         for (int i = 1; i <= 10; i++) {
             var employee = new Employee(RandomNameGenerator.generateRandomId(),
                 RandomNameGenerator.generateRandomName(),
