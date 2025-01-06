@@ -2,7 +2,7 @@ package com.ablonewolf.rabbitmq_producer.util;
 
 import com.github.javafaker.Faker;
 
-public class RandomNameGenerator {
+public class Helper {
 
     private static final Faker faker = Faker.instance();
 
