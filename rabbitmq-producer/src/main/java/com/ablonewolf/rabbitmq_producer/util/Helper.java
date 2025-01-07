@@ -19,7 +19,7 @@ public class Helper {
     }
 
     public static Long generateRandomSize() {
-        return faker.random().nextLong();
+        return faker.random().nextLong(10000);
     }
 }
 
