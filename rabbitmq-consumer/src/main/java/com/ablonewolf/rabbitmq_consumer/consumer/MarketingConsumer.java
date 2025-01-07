@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +18,10 @@ public class MarketingConsumer {
     private final ObjectMapper objectMapper;
 
     @RabbitListener(queues = RabbitMQConfig.MARKETING_QUEUE)
-    public void consumeEmployee(String message) {
+    public void consumeEmployee(Message message) {
         try {
-            var employee = objectMapper.readValue(message, Employee.class);
+            var jsonString = new String(message.getBody());
+            var employee = objectMapper.readValue(jsonString, Employee.class);
             log.info("Received employee object from Marketing Queue: {}", employee);
         } catch (JsonProcessingException e) {
             log.error("An exception occurred while deserializing employee object: {}", e.getMessage());

@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +21,10 @@ public class EmployeePublisherComponent {
 
     public void publishEmployeeFromHRExchange(Employee employee) {
         try {
-            var jsonObject = objectMapper.writeValueAsString(employee);
-            rabbitTemplate.convertAndSend(RabbitMQConfig.HR_EXCHANGE, "", jsonObject);
+            var jsonObject = objectMapper.writeValueAsBytes(employee);
+            Message message = new Message(jsonObject, new MessageProperties());
+            message.getMessageProperties().setContentType(MessageProperties.CONTENT_TYPE_JSON);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.HR_EXCHANGE, "", message);
         } catch (JsonProcessingException e) {
             log.error("An error occurred while serializing employee to json, details: {}", e.getMessage());
         }
