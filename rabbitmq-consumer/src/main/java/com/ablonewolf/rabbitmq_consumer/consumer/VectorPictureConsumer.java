@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +18,10 @@ public class VectorPictureConsumer {
     private final ObjectMapper objectMapper;
 
     @RabbitListener(queues = RabbitMQConfig.PICTURE_VECTOR_QUEUE)
-    public void listen(String message) {
+    public void listen(Message message) {
         try {
-            var picture = objectMapper.readValue(message, Picture.class);
+            var json = new String(message.getBody());
+            var picture = objectMapper.readValue(json, Picture.class);
             log.info("Vector picture received: {}", picture);
         } catch (JsonProcessingException e) {
             log.error("An error occurred when parsing picture, details: {}", e.getMessage());
