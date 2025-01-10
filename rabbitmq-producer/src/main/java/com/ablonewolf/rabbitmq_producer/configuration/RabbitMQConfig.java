@@ -4,6 +4,7 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.HeadersExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -14,6 +15,9 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableRabbit
@@ -41,6 +45,10 @@ public class RabbitMQConfig {
     public static final String JPG_ROUTING_KEY = "jpg";
     public static final String PNG_ROUTING_KEY = "png";
     public static final String SVG_ROUTING_KEY = "svg";
+
+    public static final String DISCOUNT_QUEUE = "promotion.discount.queue";
+    public static final String FREE_DELIVERY_QUEUE = "promotion.freeDelivery.queue";
+    public static final String PROMOTION_EXCHANGE = "promotion.exchange";
 
     @Bean
     public ConnectionFactory connectionFactory() {
@@ -124,5 +132,54 @@ public class RabbitMQConfig {
             .to(getPictureExchange())
             .with(SVG_ROUTING_KEY);
     }
+
+    @Bean
+    public Queue discountPromotionQueue() {
+        return new Queue(DISCOUNT_QUEUE, true);
+    }
+
+    @Bean
+    public Queue freeDeliveryQueue() {
+        return new Queue(FREE_DELIVERY_QUEUE, true);
+    }
+
+    @Bean
+    public HeadersExchange getPromotionExchange() {
+        return new HeadersExchange(PROMOTION_EXCHANGE);
+    }
+
+    @Bean
+    public Binding discountBindingRedWood() {
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("color", "red");
+        headers.put("material", "wood");
+        return BindingBuilder.bind(discountPromotionQueue())
+            .to(getPromotionExchange())
+            .whereAll(headers)
+            .match();
+    }
+
+    @Bean
+    public Binding discountBindingWhiteWood() {
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("color", "white");
+        headers.put("material", "wood");
+        return BindingBuilder.bind(discountPromotionQueue())
+            .to(getPromotionExchange())
+            .whereAll(headers)
+            .match();
+    }
+
+    @Bean
+    public Binding freeDeliveryBindingRedOrWood() {
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("color", "red");
+        headers.put("material", "wood");
+        return BindingBuilder.bind(freeDeliveryQueue())
+            .to(getPromotionExchange())
+            .whereAny(headers)
+            .match();
+    }
+
 
 }
