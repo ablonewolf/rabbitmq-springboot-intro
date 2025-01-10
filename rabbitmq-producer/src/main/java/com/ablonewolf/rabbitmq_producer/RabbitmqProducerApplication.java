@@ -1,8 +1,10 @@
 package com.ablonewolf.rabbitmq_producer;
 
 import com.ablonewolf.rabbitmq_producer.model.Employee;
+import com.ablonewolf.rabbitmq_producer.model.Furniture;
 import com.ablonewolf.rabbitmq_producer.model.Picture;
 import com.ablonewolf.rabbitmq_producer.producer.EmployeePublisherComponent;
+import com.ablonewolf.rabbitmq_producer.producer.FurnitureProducer;
 import com.ablonewolf.rabbitmq_producer.producer.PictureProducer;
 import com.ablonewolf.rabbitmq_producer.util.Helper;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
 
     private final EmployeePublisherComponent employeePublisherComponent;
     private final PictureProducer pictureProducer;
+    private final FurnitureProducer furnitureProducer;
 
     // valid sources
     private final List<String> SOURCES = List.of("MOBILE", "WEB");
@@ -49,6 +52,20 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
                 .build();
 
             pictureProducer.sendPicture(picture);
+
+            String furnitureName = Helper.generateRandomFurnitureName();
+            String color = Helper.generateRandomColor();
+            String material = Helper.generateRandomMaterial();
+            Integer price = Helper.generateRandomPrice();
+
+            var furniture = Furniture.builder()
+                .name(furnitureName)
+                .color(color)
+                .material(material)
+                .price(price)
+                .build();
+
+            furnitureProducer.sendMessage(furniture);
         }
     }
 
